@@ -10,22 +10,16 @@ import mysql.connector
 from typing import List, Tuple
 
 
-def create_patterns(fields: List[str], redaction: str, separator: str) -> dict:
-    extract_pattern = r'(?P<field>{})=[^{}]*'.format(
-            '|'.join(fields), separator)
-    replace_pattern = r'\g<field>={}'.format(redaction)
-    return {'extract': extract_pattern, 'replace': replace_pattern}
+def filter_datum(fields, redaction, message, separator):
+    """Obfuscate specified fields in the log message."""
+    return re.sub(
+        r'(?<=^|{})(?:{}=[^{}]+)(?={}|$)'.format(
+            separator, '|'.join(fields), separator, separator),
+        lambda match: '{}={}'.format(
+            match.group().split('=')[0], redaction), message)
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
-
-
-def filter_datum(
-    fields: List[str], redaction: str, message: str, separator: str
-) -> str:
-    """Filters a log line."""
-    patterns = create_patterns(fields, redaction, separator)
-    return re.sub(patterns['extract'], patterns['replace'], message)
 
 
 def get_logger() -> logging.Logger:
