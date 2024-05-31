@@ -35,3 +35,7 @@ def filter_datum(
             separator, '|'.join(fields), separator, separator),
         lambda match: '{}={}'.format(
             match.group().split('=')[0], redaction), message)
+
+
+if __name__ == "__main__":
+    main()
