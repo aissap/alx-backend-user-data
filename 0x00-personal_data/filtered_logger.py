@@ -13,11 +13,7 @@ from typing import List, Tuple
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
-def filter_datum(
-        fields: List[str],
-        redaction: str,
-        message: str,
-        separator: str) -> str:
+def filter_datum(fields, redaction, message, separator):
     """
     Obfuscate specified fields in the log message.
 
@@ -36,14 +32,6 @@ def filter_datum(
         lambda match: '{}={}'.format(match.group().split('=')[0], redaction),
         message
     )
-
-
-def filter_datum(
-    fields: List[str], redaction: str, message: str, separator: str
-) -> str:
-    """Filters a log line."""
-    patterns = create_patterns(fields, redaction, separator)
-    return re.sub(patterns['extract'], patterns['replace'], message)
 
 
 class RedactingFormatter(logging.Formatter):
@@ -84,10 +72,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
     connection = mysql.connector.connect(
         host=db_host,
-        port=3306,
         user=db_user,
         password=db_pwd,
-        database=db_name,
+        database=db_name
     )
     return connection
 
