@@ -86,7 +86,11 @@ def main():
     try:
         cursor.execute("SELECT COUNT(*) FROM users;")
         for row in cursor:
-            print(row[0])
+            log_message = '; '.join(
+                f"{field}={value if field not in PII_FIELDS else '***'}"
+                for field, value in zip(cursor.column_names, row)
+            )
+            logging.info(f"[HOLBERTON] user_data INFO {log_message}")
     except mysql.connector.Error as e:
         print("Error executing query:", e)
     finally:
