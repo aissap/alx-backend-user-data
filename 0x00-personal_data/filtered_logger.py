@@ -10,7 +10,10 @@ import mysql.connector
 from typing import List, Tuple
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(
+        fields: List[str],
+        redaction: str, message: str, separator:
+        str) -> str:
     """Obfuscate specified fields in the log message."""
     return re.sub(
         r'(?<=^|{})(?:{}=[^{}]+)(?={}|$)'.format(
