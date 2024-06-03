@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
-from flask import jsonify, abort
+from flask import jsonify, abort, Blueprint
 from api.v1.views import app_views
 
 
@@ -24,3 +24,11 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
+
+
+index = Blueprint('index', __name__, url_prefix='/api/v1')
+
+
+@index.route('/unauthorized')
+def unauthorized():
+    abort(401)
