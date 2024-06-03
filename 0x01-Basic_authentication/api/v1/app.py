@@ -7,10 +7,11 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from api.v1.views.index import index
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
+# app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
@@ -26,6 +27,8 @@ def unauthorized(error):
     response = jsonify({'error': 'Unauthorized'})
     response.status_code = 401
     return response
+
+app.register_blueprint(index)
 
 
 if __name__ == "__main__":

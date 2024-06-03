@@ -4,6 +4,8 @@
 from flask import jsonify, abort, Blueprint
 from api.v1.views import app_views
 
+index = Blueprint('index', __name__, url_prefix='/api/v1')
+
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
@@ -24,9 +26,6 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
-
-
-index = Blueprint('index', __name__, url_prefix='/api/v1')
 
 
 @index.route('/unauthorized')
