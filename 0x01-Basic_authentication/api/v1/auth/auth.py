@@ -6,6 +6,7 @@ from flask import request
 
 
 class Auth:
+    """Authentication class."""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """checking if authentication is required"""
         if path is None:
@@ -20,8 +21,9 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """Retrieving the authorization header from the request."""
         if request is not None:
-            return request.headers.get('Authorization', None)    
-        return None
+            return None
+        return request.headers.get('Authorization', None)    
+        
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Retrieving the current user from the request."""
