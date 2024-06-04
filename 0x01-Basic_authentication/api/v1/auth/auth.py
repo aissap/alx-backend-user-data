@@ -6,6 +6,7 @@ from flask import request
 
 User = TypeVar('User')
 
+
 class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """checking if authentication """
@@ -17,3 +18,4 @@ class Auth:
 
     def current_user(self, request=None) -> User:
         """Retrieving the current user from the request."""
+        return None
