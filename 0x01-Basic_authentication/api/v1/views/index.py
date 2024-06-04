@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
-from flask import jsonify, abort, Blueprint
+from flask import jsonify, abort
 from api.v1.views import app_views
 
-index = Blueprint('index', __name__, url_prefix='/api/v1')
+# index = Blueprint('index', __name__, url_prefix='/api/v1')
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
