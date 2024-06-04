@@ -11,7 +11,7 @@ from api.v1.views.index import index
 
 
 app = Flask(__name__)
-# app.register_blueprint(app_views)
+app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
@@ -23,12 +23,18 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def unauthorized(error):
-    response = jsonify({'error': 'Unauthorized'})
-    response.status_code = 401
-    return response
+def unauthorized(error) -> str:
+    """Unauthorized handler
+    """
+    return jsonify({"error": "Unauthorized"}), 401
 
-app.register_blueprint(index)
+
+@app.errorhandler(403)
+def forbidden(error) -> str:
+    """Unauthorized handler
+    """
+    return jsonify({"error": "forbidden"}), 403
+
 
 
 if __name__ == "__main__":
