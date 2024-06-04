@@ -37,7 +37,7 @@ def unauthorized() -> None:
     abort(401)
 
 
-@app_views.route('/forbidden', strict_slashes=False)
+@app_views.route('/api/v1/forbidden', methods=['GET'])
 def forbidden() -> None:
     """ GET /api/v1/forbidden
     Return:
