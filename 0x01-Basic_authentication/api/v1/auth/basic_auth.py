@@ -2,7 +2,7 @@
 """BasicAuth module"""
 import base64
 from api.v1.auth.auth import Auth
-from typing import Optional
+from typing import Optional, Tuple
 
 
 class BasicAuth(Auth):
@@ -23,7 +23,6 @@ class BasicAuth(Auth):
         
         return parts[1].strip()
 
-
     def decode_base64_authorization_header(self, base64_authorization_header: str) -> Optional[str]:
         """Returns the decoded value."""
         if base64_authorization_header is None or not isinstance(base64_authorization_header, str):
@@ -35,7 +34,6 @@ class BasicAuth(Auth):
             return decoded_str
         except:
             return None
-
 
     def extract_user_credentials(self, decoded_base64_authorization_header: str) -> Tuple[Optional[str], Optional[str]]:
         """Returns  email and password from the decoded value."""
