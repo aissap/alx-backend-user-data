@@ -34,12 +34,15 @@ def before_request():
     """Request validation!"""
     if auth is None:
         return
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    excluded_paths = [
+        '/api/v1/status/',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/',
+        '/api/v1/auth_session/login/']
     if request.path not in excluded_paths and auth.require_auth(request.path, excluded_paths):
-        if auth.authorization_header(request) is None:
+        if auth.authorization_header(request) is None and auth.session_cookie(request) is None:
             abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
@@ -58,6 +61,7 @@ def forbidden(error) -> str:
     """forbidden handler
     """
     return jsonify({"error": "forbidden"}), 403
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
