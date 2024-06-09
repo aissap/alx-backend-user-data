@@ -9,8 +9,10 @@ from models.user import User
 class BasicAuth(Auth):
     """ Basic Authentication class """
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> Optional[str]:
-        """Returns the Base64 part of the Authorization header for Basic Authentication."""
+    def extract_base64_authorization_header(
+            self,
+            authorization_header: str) -> Optional[str]:
+        """Returns the Base64 part."""
         if authorization_header is None:
             return None
         if not isinstance(authorization_header, str):
@@ -19,9 +21,10 @@ class BasicAuth(Auth):
             return None
         return authorization_header[6:]
 
-
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> Optional[str]:
-        """Decodes the Base64 part of the Authorization header."""
+    def decode_base64_authorization_header(
+            self,
+            base64_authorization_header: str) -> Optional[str]:
+        """Decode the Base64 part."""
         if base64_authorization_header is None:
             return None
         if not isinstance(base64_authorization_header, str):
@@ -32,8 +35,10 @@ class BasicAuth(Auth):
         except Exception:
             return None
 
-
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> Optional[Tuple[str, str]]:
+    def extract_user_credentials(
+            self,
+            decoded_base64_authorization_header:
+            str) -> Optional[Tuple[str, str]]:
         """Extracts user credentials from the decoded value."""
         if decoded_base64_authorization_header is None:
             return None, None
@@ -42,7 +47,6 @@ class BasicAuth(Auth):
         if ':' not in decoded_base64_authorization_header:
             return None, None
 
-        user_email, user_pwd = decoded_base64_authorization_header.split(':', 1)
+        user_email,
+        user_pwd = decoded_base64_authorization_header.split(':', 1)
         return user_email, user_pwd
-
-        
