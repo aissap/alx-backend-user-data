@@ -1,9 +1,13 @@
+#!/usr/bin/env python3
 from flask import request, jsonify
 from api.v1.views import app_views
 from api.v1.app import auth
 from models.user import User
 
-@app_views.route('/auth_session/login', methods=['POST', 'GET'], strict_slashes=False)
+
+@app_views.route(
+        '/auth_session/login',
+        methods=['POST', 'GET'], strict_slashes=False)
 def login():
     """Login with session authentication"""
     if request.method == 'POST':
