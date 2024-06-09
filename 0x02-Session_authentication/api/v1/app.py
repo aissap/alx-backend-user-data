@@ -1,4 +1,3 @@
-# api/v1/app.py
 #!/usr/bin/env python3
 """
 Route module for the API
@@ -11,6 +10,7 @@ import os
 from api.v1.views.index import index
 from api.v1.auth.auth import Auth
 
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
@@ -18,6 +18,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
 
 auth_type = os.getenv('AUTH_TYPE')
+
 
 if auth_type == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
@@ -29,6 +30,7 @@ else:
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.before_request
 def before_request():
     """Request validation!"""
@@ -39,8 +41,11 @@ def before_request():
         '/api/v1/unauthorized/',
         '/api/v1/forbidden/',
         '/api/v1/auth_session/login/']
-    if request.path not in excluded_paths and auth.require_auth(request.path, excluded_paths):
-        if auth.authorization_header(request) is None and auth.session_cookie(request) is None:
+    if request.path not in excluded_paths and auth.require_auth(
+            request.path,
+            excluded_paths):
+        if auth.authorization_header(request) is None and
+        auth.session_cookie(request) is None:
             abort(401)
 
 
@@ -50,11 +55,13 @@ def not_found(error) -> str:
     """
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """Unauthorized handler
     """
     return jsonify({"error": "Unauthorized"}), 401
+
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
