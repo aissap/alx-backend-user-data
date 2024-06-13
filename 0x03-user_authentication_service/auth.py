@@ -8,17 +8,24 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 
 
-def _hash_password(password: str) -> bytes:
+class Auth:
+    """Auth class to interact with the authentication database.
     """
-    Hash a password with bcrypt
-    """
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return hashed
 
-def register_user(self, email: str, password: str) -> User:
+    def __init__(self):
+        self._db = DB()
+
+    def _hash_password(self, password: str) -> bytes:
         """
-        Register a new user with email and password
+        Hash a password with bcrypt.
+        """
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed
+
+    def register_user(self, email: str, password: str) -> User:
+        """
+        Register a new user with email and password.
         """
         try:
             self._db.find_user_by(email=email)
