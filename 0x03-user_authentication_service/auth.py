@@ -47,6 +47,6 @@ class Auth:
                         password.encode("utf-8"),
                         user.hashed_password.encode("utf-8"))
         except NoResultFound:
-            return False
+            pass
 
         return False
