@@ -10,10 +10,10 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 def _generate_uuid() -> str:
-        """
-        Generate a new UUID and return it as a string.
-        """
-        return str(uuid.uuid4())
+    """
+    Generate a new UUID and return it as a string.
+    """
+    return str(uuid.uuid4())
 
 
 def _hash_password(self, password: str) -> bytes:
@@ -33,7 +33,10 @@ class Auth:
         self._db = DB()
 
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(
+            self, email:
+            str,
+            password: str) -> User:
         """
         Register a new user with email and password.
         """
