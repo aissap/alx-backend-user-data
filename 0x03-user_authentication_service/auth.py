@@ -32,13 +32,6 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def _hash_password(self, password: str) -> bytes:
-        """
-        Hash a password with bcrypt.
-        """
-        salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed
 
     def register_user(self, email: str, password: str) -> User:
         """
@@ -67,8 +60,14 @@ class Auth:
             pass
         return False
 
-    def _generate_uuid() -> str:
+    def create_session(self, email: str) -> str:
         """
-        Generate a new UUID and return it as a string.
+        Create a session for the user identified by email.
         """
-        return str(uuid.uuid4())
+        try:
+            user = self._db.find_user_by(email=email)
+            new_session_id = self._generate_uuid()
+            self._db.update_user(user.id, session_id=new_session_id)
+            return new_session_id
+        except NoResultFound:
+            return None
