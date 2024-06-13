@@ -9,6 +9,22 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 
 
+def _generate_uuid() -> str:
+        """
+        Generate a new UUID and return it as a string.
+        """
+        return str(uuid.uuid4())
+
+
+def _hash_password(self, password: str) -> bytes:
+        """
+        Hash a password with bcrypt.
+        """
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
