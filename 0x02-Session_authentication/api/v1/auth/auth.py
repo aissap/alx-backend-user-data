@@ -32,7 +32,6 @@ class Auth:
         """Return None to indicate that no user is authenticated"""
         return None
 
-
     def session_cookie(self, request=None):
         """Returns a cookie from a request"""
         if request is None:
