@@ -2,6 +2,7 @@
 """
 Auth module
 """
+import uuid
 import bcrypt
 from db import DB
 from user import User
@@ -48,5 +49,10 @@ class Auth:
                         user.hashed_password.encode("utf-8"))
         except NoResultFound:
             pass
-
         return False
+
+    def _generate_uuid() -> str:
+        """
+        Generate a new UUID and return it as a string.
+        """
+        return str(uuid.uuid4())
