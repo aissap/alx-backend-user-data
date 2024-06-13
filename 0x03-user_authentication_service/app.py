@@ -10,6 +10,14 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
+@app.route("/")
+def welcome():
+    """
+    Route to return a welcome message in JSON format.
+    """
+    return jsonify({"message": "Bienvenue"})
+
+
 @app.route("/users", methods=["POST"])
 def register_user():
     """
