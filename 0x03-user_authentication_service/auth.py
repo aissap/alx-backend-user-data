@@ -22,14 +22,14 @@ class Auth:
 
     def __init__(self):
         self._db = DB()
-        
+
     def _hash_password(self, password: str) -> bytes:
         """
         Hash a password with bcrypt.
         """
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed   
+        return hashed
 
     def register_user(self, email: str, password: str) -> User:
         """
@@ -78,7 +78,7 @@ class Auth:
         """
         if session_id is None:
             return None
-        
+
         try:
             user = self._db.find_user_by(session_id=session_id)
             return user
