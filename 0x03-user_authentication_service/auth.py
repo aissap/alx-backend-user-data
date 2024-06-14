@@ -32,7 +32,6 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-
     def register_user(self, email: str, password: str) -> User:
         """
         Register a new user with email and password.
@@ -42,7 +41,10 @@ class Auth:
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = self._hash_password(password)
-            new_user = self._db.add_user(email, hashed_password.decode('utf-8'))
+            new_user = self._db.add_user(
+                    email,
+                    hashed_password.decode('utf-8')
+                    )
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
@@ -67,5 +69,18 @@ class Auth:
             new_session_id = self._generate_uuid()
             self._db.update_user(user.id, session_id=new_session_id)
             return new_session_id
+        except NoResultFound:
+            return None
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """
+        Find the user corresponding to the given session ID.
+        """
+        if session_id is None:
+            return None
+        
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
         except NoResultFound:
             return None
