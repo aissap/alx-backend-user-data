@@ -83,11 +83,30 @@ def profile():
     if session_id is None:
         abort(403)
 
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
 
     if user is None:
         abort(403)
     return jsonify({'email': user.email}), 200
+
+
+@app.route('/reset_password', methods=['POST'])
+def get_reset_password_token():
+    """ Get reset password token.
+    """
+    email = request.form.get('email')
+
+    if not email:
+        abort(400, "Missing email field")
+
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+        return jsonify({
+            "email": email,
+            "reset_token": reset_token
+        }), 200
+    except ValueError:
+        abort(403, f"User with email '{email}' not found")
 
 
 if __name__ == "__main__":
