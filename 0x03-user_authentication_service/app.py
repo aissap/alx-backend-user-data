@@ -73,6 +73,7 @@ def logout():
     AUTH.destroy_session(user.id)
     return redirect('/')
 
+
 @app.route('/profile', methods=['GET'])
 def profile():
     """profile.
