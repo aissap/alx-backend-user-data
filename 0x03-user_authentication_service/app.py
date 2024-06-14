@@ -26,11 +26,11 @@ def register_user():
     try:
         email = request.form["email"]
         password = request.form["password"]
-        
+
         user = AUTH.register_user(email, password)
-        
+
         return jsonify({"email": user.email, "message": "user created"}), 200
-    
+
     except ValueError as err:
         return jsonify({"message": str(err)}), 400
 
