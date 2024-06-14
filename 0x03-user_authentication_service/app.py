@@ -53,7 +53,7 @@ def login():
     if session_id is None:
         abort(401)
 
-    response = make_response(jsonify({"email": email, "message": "logged in"}))
+    response = (jsonify({"email": email, "message": "logged in"}))
     response.set_cookie('session_id', session_id)
     return response
 
@@ -65,12 +65,12 @@ def logout():
     if session_id is None:
         abort(403)
 
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
 
     if user is None:
         abort(403)
 
-    auth.destroy_session(user.id)
+    AUTH.destroy_session(user.id)
     return redirect('/')
 
 
